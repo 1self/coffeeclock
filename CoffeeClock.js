@@ -30,21 +30,21 @@ if (Meteor.isClient) {
 
     Template.logging.events({
         'click #logActivity': function () {
-            var beerInput = $("input[name='beer']");
-            var beerEvent = {
+            var coffeeInput = $("input[name='coffee']");
+            var coffeeEvent = {
                 "source": config.appName,
                 "version": config.appVersion,
-                "objectTags": ["alcohol", "beer"],
+                "objectTags": ["caffeine", "coffee"],
                 "actionTags": ["drink"],
                 "properties": {
-                    "volume": parseInt(beerInput.val())
+                    "ml": parseInt(coffeeInput.val())
                 }
             };
             
-            lib1self.sendEvent(beerEvent, window.localStorage.streamId, window.localStorage.writeToken, function(){});
-            beerInput.val("");
+            lib1self.sendEvent(coffeeEvent, window.localStorage.streamId, window.localStorage.writeToken, function(){});
+            coffeeInput.val("");
             console.log("Event sent:");
-            console.log(beerEvent);
+            console.log(coffeeEvent);
         }
     });
 
@@ -61,11 +61,11 @@ if (Meteor.isClient) {
 
     
     Template.selectVisualizations.events({
-        'click #beerViz': function () {
+        'click #coffeeViz': function () {
             var url = lib1self.visualize(window.localStorage.streamId, window.localStorage.readToken)
-                .objectTags(["alcohol", "beer"])
+                .objectTags(["caffeine", "coffee"])
                 .actionTags(["drink"])
-                .sum("volume")
+                .sum("ml")
                 .barChart()
                 .backgroundColor("84c341")
                 .url();
